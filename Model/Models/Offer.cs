@@ -31,8 +31,11 @@ namespace Model
             get{ return id; }
             set
             {
-                id = value;
-                RaisePropertyChanged("Id");
+                if (id != value)
+                {
+                    id = value;
+                    RaisePropertyChanged("Id");
+                }
             }
         }
 
@@ -41,8 +44,11 @@ namespace Model
             get { return name; }
             set
             {
-                name = value;
-                RaisePropertyChanged("Name");
+                if (name != value)
+                {
+                    name = value;
+                    RaisePropertyChanged("Name");
+                }
             }
         }
 
@@ -51,8 +57,11 @@ namespace Model
             get { return startDate; }
             set
             {
-                startDate = value;
-                RaisePropertyChanged("StartDate");
+                if (startDate != value)
+                {
+                    startDate = value;
+                    RaisePropertyChanged("StartDate");
+                }
             }
         }
 
@@ -61,8 +70,11 @@ namespace Model
             get { return returnDate; }
             set
             {
-                returnDate = value;
-                RaisePropertyChanged("ReturnDate");
+                if (returnDate != value)
+                {
+                    returnDate = value;
+                    RaisePropertyChanged("ReturnDate");
+                }
             }
         }
 
@@ -71,8 +83,11 @@ namespace Model
             get { return price; }
             set
             {
-                price = value;
-                RaisePropertyChanged("Price");
+                if (price != value)
+                {
+                    price = value;
+                    RaisePropertyChanged("Price");
+                }
             }
         }
 
@@ -81,8 +96,11 @@ namespace Model
             get { return imgPath; }
             set
             {
-                imgPath = value;
-                RaisePropertyChanged("ImgPath");
+                if (imgPath != value)
+                {
+                    imgPath = value;
+                    RaisePropertyChanged("ImgPath");
+                }
             }
         }
 

@@ -8,7 +8,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Images\" />
+    <None Remove="Views\Images\background.jpg" />
+    <None Remove="Views\Images\budva.jpg" />
+    <None Remove="Views\Images\canj.jpg" />
+    <None Remove="Views\Images\herceg_novi.jpg" />
+    <None Remove="Views\Images\kotor.jpg" />
+    <None Remove="Views\Images\petrovac.jpg" />
+    <None Remove="Views\Images\sutomore.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Images\background.jpg" />
+    <Resource Include="Views\Images\budva.jpg" />
+    <Resource Include="Views\Images\canj.jpg" />
+    <Resource Include="Views\Images\herceg_novi.jpg" />
+    <Resource Include="Views\Images\kotor.jpg" />
+    <Resource Include="Views\Images\petrovac.jpg" />
+    <Resource Include="Views\Images\sutomore.jpg" />
   </ItemGroup>
 
 </Project>
