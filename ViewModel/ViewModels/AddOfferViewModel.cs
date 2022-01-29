@@ -15,6 +15,7 @@ namespace ViewModel.ViewModels
         public MyICommand BrowseCommand { get; set; }
         public MyICommand AddCommand { get; set; }
         public MyICommand UpdateCommand { get; set; }
+        public MyICommand SelectionChangedCommand { get; set; }
 
         private Offer selectedOffer;
 
@@ -24,7 +25,6 @@ namespace ViewModel.ViewModels
             set
             {
                 selectedOffer = value;
-
             }
         }
 
@@ -41,6 +41,7 @@ namespace ViewModel.ViewModels
             BrowseCommand = new MyICommand(OnBrowse);
             AddCommand = new MyICommand(OnAdd);
             UpdateCommand = new MyICommand(OnUpdate);
+            SelectionChangedCommand = new MyICommand(OnSelectionChanged);
         }
 
         public int IdVM
@@ -122,18 +123,72 @@ namespace ViewModel.ViewModels
 
         private void OnAdd()
         {
-            Offer addedOffer = new Offer(IdVM, NameVM, StartDateVM, ReturnDateVM, PriceVM, ImgPathVM);
-            if (Offers.Contains(addedOffer))
+            foreach(Offer offer in Offers)
             {
-                //Make spectial exception (folder also)
-                throw new Exception();
+                if(offer.Id == IdVM)
+                {
+                    //Make special exception
+                    throw new Exception();
+                }
             }
-            Offers.Add(addedOffer);
+            Offers.Add(new Offer(IdVM, NameVM, StartDateVM, ReturnDateVM, PriceVM, ImgPathVM));
         }
 
         private void OnUpdate()
         {
-            throw new NotImplementedException();
+            //Error: Once the item is updated, SelectedItem property "dies" - 
+            //- cannot change its values, the textboxes and datepickers remain locked-in
+
+            /*
+            foreach(Offer offer in Offers)
+            {
+                if(offer.Id == IdVM)
+                {
+                    offer.Name = NameVM;
+                    offer.StartDate = StartDateVM;
+                    offer.ReturnDate = ReturnDateVM;
+                    offer.Price = PriceVM;
+                    offer.ImgPath = ImgPathVM;
+                }
+            }
+            */
+
+            Offer updatedOffer = new Offer(IdVM, NameVM, StartDateVM, ReturnDateVM, PriceVM, ImgPathVM);
+            Offer offer1 = null;
+            foreach(Offer offer in Offers)
+            {
+                if(offer.Id == IdVM)
+                {
+                    offer1 = offer;
+                }
+            }
+            if(offer1 is null)
+            {
+                //Updating non existant element exception
+                throw new Exception();
+            }
+            Offers.Remove(offer1);
+            Offers.Add(updatedOffer);
+        }
+
+        private void OnSelectionChanged()
+        {
+            if(SelectedOffer is null)
+            {
+                IdVM = 0;
+                NameVM = "";
+                StartDateVM = new DateTime(2022, 8, 1);
+                ReturnDateVM = new DateTime(2022, 8, 11);
+                PriceVM = 0;
+                ImgPathVM = "";
+                return;
+            }
+            IdVM = SelectedOffer.Id;
+            NameVM = SelectedOffer.Name;
+            StartDateVM = SelectedOffer.StartDate; 
+            ReturnDateVM = SelectedOffer.ReturnDate;
+            PriceVM = SelectedOffer.Price;
+            ImgPathVM = SelectedOffer.ImgPath;
         }
 
         public void LoadOffers()
