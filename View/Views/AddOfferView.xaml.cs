@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,18 @@ namespace View.Views
         public AddOfferView()
         {
             InitializeComponent();
+        }
+
+        public string Text { get; set; }
+
+        private void btnBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                this.Text = openFileDialog.FileName;
+                tbImagePath.Text = Text;
+            }
         }
     }
 }

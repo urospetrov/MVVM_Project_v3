@@ -13,7 +13,7 @@ namespace ViewModel.ViewModels
     {
         public static BindingList<Offer> OffersList { get; set; } = new BindingList<Offer>();
 
-        public MyICommand BrowseCommand { get; set; }
+        //public MyICommand BrowseCommand { get; set; }
         public MyICommand AddCommand { get; set; }
         public MyICommand UpdateCommand { get; set; }
         public MyICommand SelectionChangedCommand { get; set; }
@@ -42,7 +42,7 @@ namespace ViewModel.ViewModels
 
         public AddOfferViewModel()
         {
-            BrowseCommand = new MyICommand(OnBrowse);
+            //BrowseCommand = new MyICommand(OnBrowse);
             AddCommand = new MyICommand(OnAdd);
             UpdateCommand = new MyICommand(OnUpdate);
             SelectionChangedCommand = new MyICommand(OnSelectionChanged);
@@ -134,10 +134,12 @@ namespace ViewModel.ViewModels
             }
         }
 
+        /*
         private void OnBrowse()
         {
             throw new NotImplementedException();
         }
+        */
 
         private void OnAdd()
         {
