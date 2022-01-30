@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,13 @@ namespace ViewModel.ViewModels
 {
     public class AddOfferViewModel : BindableBase
     {
-        public ObservableCollection<Offer> Offers { get; set; }
+        public static BindingList<Offer> OffersList { get; set; } = new BindingList<Offer>();
 
         public MyICommand BrowseCommand { get; set; }
         public MyICommand AddCommand { get; set; }
         public MyICommand UpdateCommand { get; set; }
+        public MyICommand SelectionChangedCommand { get; set; }
+        public MyICommand DeleteCommand { get; set; }
 
         private Offer selectedOffer;
 
@@ -24,7 +27,7 @@ namespace ViewModel.ViewModels
             set
             {
                 selectedOffer = value;
-
+                DeleteCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -35,14 +38,30 @@ namespace ViewModel.ViewModels
         private uint priceVM;
         private string imgPathVM;
 
+        private static bool exists = false;
+
         public AddOfferViewModel()
         {
-            LoadOffers();
             BrowseCommand = new MyICommand(OnBrowse);
             AddCommand = new MyICommand(OnAdd);
             UpdateCommand = new MyICommand(OnUpdate);
+            SelectionChangedCommand = new MyICommand(OnSelectionChanged);
+            DeleteCommand = new MyICommand(OnDelete, CanDelete);
+            foreach (Offer offer in DisplayOffersViewModel.Offers)
+            {
+                exists = false;
+                foreach(Offer offer1 in OffersList)
+                {
+                    if(OffersList.Contains(offer))
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists)
+                    OffersList.Add(new Offer(offer.Id, offer.Name, offer.StartDate, offer.ReturnDate, offer.Price, offer.ImgPath));
+            }
         }
-
         public int IdVM
         {
             get { return idVM; }
@@ -122,28 +141,84 @@ namespace ViewModel.ViewModels
 
         private void OnAdd()
         {
-            Offer addedOffer = new Offer(IdVM, NameVM, StartDateVM, ReturnDateVM, PriceVM, ImgPathVM);
-            if (Offers.Contains(addedOffer))
+            foreach(Offer offer in OffersList)
             {
-                //Make spectial exception (folder also)
-                throw new Exception();
+                if(offer.Id == IdVM)
+                {
+                    //Make special exception
+                    throw new Exception();
+                }
             }
-            Offers.Add(addedOffer);
+            OffersList.Add(new Offer(IdVM, NameVM, StartDateVM, ReturnDateVM, PriceVM, ImgPathVM));
         }
 
         private void OnUpdate()
         {
-            throw new NotImplementedException();
+            //Error: Once the item is updated, SelectedItem property "dies" - 
+            //- cannot change its values, the textboxes and datepickers remain locked-in
+
+            /*
+            foreach(Offer offer in Offers)
+            {
+                if(offer.Id == IdVM)
+                {
+                    offer.Name = NameVM;
+                    offer.StartDate = StartDateVM;
+                    offer.ReturnDate = ReturnDateVM;
+                    offer.Price = PriceVM;
+                    offer.ImgPath = ImgPathVM;
+                }
+            }
+            */
+
+            Offer updatedOffer = new Offer(IdVM, NameVM, StartDateVM, ReturnDateVM, PriceVM, ImgPathVM);
+            Offer offer1 = null;
+            foreach(Offer offer in OffersList)
+            {
+                if(offer.Id == IdVM)
+                {
+                    offer1 = offer;
+                }
+            }
+            if(offer1 is null)
+            {
+                //Updating non existant element exception
+                throw new Exception();
+            }
+            OffersList.Remove(offer1);
+            OffersList.Add(updatedOffer);
         }
 
-        public void LoadOffers()
+        private void OnSelectionChanged()
         {
-            ObservableCollection<Offer> offers = new ObservableCollection<Offer>();
-
-            offers.Add(new Offer(1, "Name", new DateTime(2022, 1, 7), new DateTime(2022, 1, 17), 100, "Images/budva.jpg"));
-            offers.Add(new Offer(2, "Name", new DateTime(2022, 1, 7), new DateTime(2022, 1, 17), 100, "Images/budva.jpg"));
-
-            Offers = offers;
+            if(SelectedOffer is null)
+            {
+                IdVM = 0;
+                NameVM = "";
+                StartDateVM = new DateTime(2022, 8, 1);
+                ReturnDateVM = new DateTime(2022, 8, 11);
+                PriceVM = 0;
+                ImgPathVM = "";
+                return;
+            }
+            IdVM = SelectedOffer.Id;
+            NameVM = SelectedOffer.Name;
+            StartDateVM = SelectedOffer.StartDate; 
+            ReturnDateVM = SelectedOffer.ReturnDate;
+            PriceVM = SelectedOffer.Price;
+            ImgPathVM = SelectedOffer.ImgPath;
         }
+
+        private bool CanDelete()
+        {
+            return SelectedOffer != null;
+        }
+
+        private void OnDelete()
+        {
+            OffersList.Remove(SelectedOffer);
+        }
+
+
     }
 }
