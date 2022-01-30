@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,13 @@ namespace ViewModel.ViewModels
 {
     public class AddOfferViewModel : BindableBase
     {
-        public ObservableCollection<Offer> Offers { get; set; }
+        public static BindingList<Offer> OffersList { get; set; } = new BindingList<Offer>();
 
         public MyICommand BrowseCommand { get; set; }
         public MyICommand AddCommand { get; set; }
         public MyICommand UpdateCommand { get; set; }
         public MyICommand SelectionChangedCommand { get; set; }
+        public MyICommand DeleteCommand { get; set; }
 
         private Offer selectedOffer;
 
@@ -25,6 +27,7 @@ namespace ViewModel.ViewModels
             set
             {
                 selectedOffer = value;
+                DeleteCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -35,15 +38,30 @@ namespace ViewModel.ViewModels
         private uint priceVM;
         private string imgPathVM;
 
+        private static bool exists = false;
+
         public AddOfferViewModel()
         {
-            LoadOffers();
             BrowseCommand = new MyICommand(OnBrowse);
             AddCommand = new MyICommand(OnAdd);
             UpdateCommand = new MyICommand(OnUpdate);
             SelectionChangedCommand = new MyICommand(OnSelectionChanged);
+            DeleteCommand = new MyICommand(OnDelete, CanDelete);
+            foreach (Offer offer in DisplayOffersViewModel.Offers)
+            {
+                exists = false;
+                foreach(Offer offer1 in OffersList)
+                {
+                    if(OffersList.Contains(offer))
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists)
+                    OffersList.Add(new Offer(offer.Id, offer.Name, offer.StartDate, offer.ReturnDate, offer.Price, offer.ImgPath));
+            }
         }
-
         public int IdVM
         {
             get { return idVM; }
@@ -123,7 +141,7 @@ namespace ViewModel.ViewModels
 
         private void OnAdd()
         {
-            foreach(Offer offer in Offers)
+            foreach(Offer offer in OffersList)
             {
                 if(offer.Id == IdVM)
                 {
@@ -131,7 +149,7 @@ namespace ViewModel.ViewModels
                     throw new Exception();
                 }
             }
-            Offers.Add(new Offer(IdVM, NameVM, StartDateVM, ReturnDateVM, PriceVM, ImgPathVM));
+            OffersList.Add(new Offer(IdVM, NameVM, StartDateVM, ReturnDateVM, PriceVM, ImgPathVM));
         }
 
         private void OnUpdate()
@@ -155,7 +173,7 @@ namespace ViewModel.ViewModels
 
             Offer updatedOffer = new Offer(IdVM, NameVM, StartDateVM, ReturnDateVM, PriceVM, ImgPathVM);
             Offer offer1 = null;
-            foreach(Offer offer in Offers)
+            foreach(Offer offer in OffersList)
             {
                 if(offer.Id == IdVM)
                 {
@@ -167,8 +185,8 @@ namespace ViewModel.ViewModels
                 //Updating non existant element exception
                 throw new Exception();
             }
-            Offers.Remove(offer1);
-            Offers.Add(updatedOffer);
+            OffersList.Remove(offer1);
+            OffersList.Add(updatedOffer);
         }
 
         private void OnSelectionChanged()
@@ -191,14 +209,16 @@ namespace ViewModel.ViewModels
             ImgPathVM = SelectedOffer.ImgPath;
         }
 
-        public void LoadOffers()
+        private bool CanDelete()
         {
-            ObservableCollection<Offer> offers = new ObservableCollection<Offer>();
-
-            offers.Add(new Offer(1, "Name", new DateTime(2022, 1, 7), new DateTime(2022, 1, 17), 100, "Images/budva.jpg"));
-            offers.Add(new Offer(2, "Name", new DateTime(2022, 1, 7), new DateTime(2022, 1, 17), 100, "Images/budva.jpg"));
-
-            Offers = offers;
+            return SelectedOffer != null;
         }
+
+        private void OnDelete()
+        {
+            OffersList.Remove(SelectedOffer);
+        }
+
+
     }
 }

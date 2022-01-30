@@ -17,8 +17,30 @@
         <DataTemplate DataType="{x:Type viewModels:AddOfferViewModel}">
             <views:AddOfferView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:DisplayOffersViewModel}">
+            <views:DisplayOffersView />
+        </DataTemplate>
     </Window.Resources>
     <Grid>
-        <ContentControl Content="{Binding CurrentViewModel}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0"
+                   Margin="5">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Display Offers"
+                          Command="{Binding NavCommand}"
+                          CommandParameter="display" />
+                <MenuItem Header="Add Offer"
+                          Command="{Binding NavCommand}"
+                          CommandParameter="add" />
+            </Menu>
+        </DockPanel>
+
+        <Grid Grid.Row="1">
+            <ContentControl Content="{Binding CurrentViewModel}" />
+        </Grid>
     </Grid>
 </Window>
