@@ -11,13 +11,14 @@
         <viewModels:DisplayOffersViewModel />
     </UserControl.DataContext>
     <Grid>
-        <DataGrid Margin="20 150 20 20"
+        <DataGrid Margin="20 150 20 90"
                   ItemsSource="{Binding Offers}"
                   IsReadOnly="True"
                   SelectionMode="Single"
                   AutoGenerateColumns="False"
                   CanUserResizeColumns="False"
-                  CanUserReorderColumns="False">
+                  CanUserReorderColumns="False"
+                  Height="300">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Image"
                                         Width="150">

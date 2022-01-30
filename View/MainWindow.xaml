@@ -30,12 +30,12 @@
         <DockPanel Grid.Row="0"
                    Margin="5">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="Display Offers"
-                          Command="{Binding NavCommand}"
-                          CommandParameter="display" />
                 <MenuItem Header="Add Offer"
                           Command="{Binding NavCommand}"
                           CommandParameter="add" />
+                <MenuItem Header="Display Offers"
+                          Command="{Binding NavCommand}"
+                          CommandParameter="display" />
             </Menu>
         </DockPanel>
 

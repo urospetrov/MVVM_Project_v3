@@ -11,7 +11,12 @@ namespace ViewModel.ViewModels
 {
     public class AddOfferViewModel : BindableBase
     {
-        public static BindingList<Offer> OffersList { get; set; } = new BindingList<Offer>();
+        public static ObservableCollection<Offer> OffersList { get; set; } = new ObservableCollection<Offer>
+        {
+                new Offer(1, "Herceg Novi", new DateTime(2022, 7, 1), new DateTime(2022, 7, 11), 250, "Images/herceg_novi.jpg"),
+                new Offer(2, "Budva", new DateTime(2022, 8, 1), new DateTime(2022, 8, 11), 300, "Images/budva.jpg"),
+                new Offer(3, "Canj", new DateTime(2022, 8, 11), new DateTime(2022, 8, 21), 200, "Images/canj.jpg")
+        };
 
         //public MyICommand BrowseCommand { get; set; }
         public MyICommand AddCommand { get; set; }
@@ -47,7 +52,7 @@ namespace ViewModel.ViewModels
             UpdateCommand = new MyICommand(OnUpdate);
             SelectionChangedCommand = new MyICommand(OnSelectionChanged);
             DeleteCommand = new MyICommand(OnDelete, CanDelete);
-            foreach (Offer offer in DisplayOffersViewModel.Offers)
+            /*foreach (Offer offer in DisplayOffersViewModel.Offers)
             {
                 exists = false;
                 foreach(Offer offer1 in OffersList)
@@ -60,7 +65,7 @@ namespace ViewModel.ViewModels
                 }
                 if (!exists)
                     OffersList.Add(new Offer(offer.Id, offer.Name, offer.StartDate, offer.ReturnDate, offer.Price, offer.ImgPath));
-            }
+            }*/
         }
         public int IdVM
         {

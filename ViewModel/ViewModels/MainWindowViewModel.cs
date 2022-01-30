@@ -17,7 +17,7 @@ namespace ViewModel.ViewModels
         public MainWindowViewModel()
         {
             NavCommand = new MyICommand<string>(OnNav);
-            CurrentViewModel = displayOffersViewModel;
+            CurrentViewModel = addOfferViewModel;
         }
 
         private void OnNav(string obj)
