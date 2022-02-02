@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{93A464D6-CBB3-4241-9505-25E4FBE9032E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{93A464D6-CBB3-4241-9505-25E4FBE9032E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{2A4C0203-F41B-48B9-B314-3707647119F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{2A4C0203-F41B-48B9-B314-3707647119F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{161FD5A2-5A80-4596-916C-A9333A925118}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel", "ViewModel\ViewModel.csproj", "{161FD5A2-5A80-4596-916C-A9333A925118}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "View\View.csproj", "{163166F7-BA36-45A0-900F-7A2B247810DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View", "View\View.csproj", "{163166F7-BA36-45A0-900F-7A2B247810DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabinKarpAlgorithm", "RabinKarpAlgorithm\RabinKarpAlgorithm.csproj", "{9086C739-2B44-41DC-84FD-184AEAB290D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{163166F7-BA36-45A0-900F-7A2B247810DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{163166F7-BA36-45A0-900F-7A2B247810DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{163166F7-BA36-45A0-900F-7A2B247810DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9086C739-2B44-41DC-84FD-184AEAB290D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9086C739-2B44-41DC-84FD-184AEAB290D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9086C739-2B44-41DC-84FD-184AEAB290D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9086C739-2B44-41DC-84FD-184AEAB290D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
