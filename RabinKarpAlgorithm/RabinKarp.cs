@@ -33,8 +33,6 @@ namespace RabinKarpAlgorithm
             }
 
             sum = HashMethod(new string(possibleMatchChar));
-
-            //1.
             if (sum == patternHash)
                 match = pattern.Equals(new string(possibleMatchChar));
             if (match == true)
@@ -53,7 +51,6 @@ namespace RabinKarpAlgorithm
                 possibleMatchChar[patternLen - 1] = baseString[i + patternLen - 1];
                 sum = (((sum - ((baseString[i - 1] * (int)Math.Pow(10, pwr)) % mod) + mod) % mod * 10) + baseString[i + patternLen - 1]) % mod;
 
-                //Completely same as 1., could be method
                 if (sum == patternHash)
                     match = pattern.Equals(new string(possibleMatchChar));
                 if (match == true)
