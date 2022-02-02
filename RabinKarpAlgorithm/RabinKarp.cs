@@ -49,7 +49,7 @@ namespace RabinKarpAlgorithm
                     j++;
                 }
                 possibleMatchChar[patternLen - 1] = baseString[i + patternLen - 1];
-                sum = (((sum - ((baseString[i - 1] * (int)Math.Pow(10, pwr)) % mod) + mod) % mod * 10) + baseString[i + patternLen - 1]) % mod;
+                sum = (((sum - ((baseString[i - 1] * (int)Math.Pow(2, pwr)) % mod) + mod) % mod * 2) + baseString[i + patternLen - 1]) % mod;
 
                 if (sum == patternHash)
                     match = pattern.Equals(new string(possibleMatchChar));
@@ -64,7 +64,7 @@ namespace RabinKarpAlgorithm
             int pwr = str.Length - 1;
             foreach (char c in str)
             {
-                sum += c * (int)Math.Pow(10, pwr);
+                sum += c * (int)Math.Pow(2, pwr);
                 pwr--;
             }
             sum = sum % mod;
