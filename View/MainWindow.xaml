@@ -20,6 +20,9 @@
         <DataTemplate DataType="{x:Type viewModels:DisplayOffersViewModel}">
             <views:DisplayOffersView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:RabinKarpViewModel}">
+            <views:RabinKarpView />
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -36,6 +39,9 @@
                 <MenuItem Header="Display Offers"
                           Command="{Binding NavCommand}"
                           CommandParameter="display" />
+                <MenuItem Header="Rabin-Karp Algorithm"
+                          Command="{Binding NavCommand}"
+                          CommandParameter="rabinkarp" />
             </Menu>
         </DockPanel>
 
