@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="View.Views.RabinKarpView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:View.Views"
+             xmlns:viewModels="clr-namespace:ViewModel.ViewModels;assembly=ViewModel"
+             mc:Ignorable="d"
+             d:DesignHeight="570"
+             d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewModels:RabinKarpViewModel />
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" 
+               FontSize="18"
+               Content="Enter the base string: "
+               Margin="20 10"/>
+        <TextBox Grid.Row="1"
+                 FontSize="18" 
+                 Height="200"
+                 Margin="20 0"
+                 TextWrapping="Wrap"
+                 Text="{Binding BaseString}"/>
+
+        <Label Grid.Row="2"
+               FontSize="18"
+               Content="Enter the pattern: "
+               Margin="20 10" />
+        <TextBox Grid.Row="2"
+                 FontSize="18"
+                 Margin="220 10 170 10"
+                 Text="{Binding Pattern}"/>
+        <Button Grid.Row="2"
+                FontSize="18"
+                FontWeight="Bold"
+                Content="Search"
+                HorizontalAlignment="Right"
+                Margin="20 10"
+                Width="130"
+                Command="{Binding SearchCommand}"/>
+
+        <Label Grid.Row="3"
+               FontSize="18"
+               Content="Number of times the pattern has appared in the base string: "
+               Margin="20 10"/>
+        <Label Grid.Row="3"
+               FontSize="18"
+               Content="{Binding Cnt}"
+               HorizontalAlignment="Right"
+               Margin="0 10 20 10"
+               Width="240"/>
+    </Grid>
+</UserControl>

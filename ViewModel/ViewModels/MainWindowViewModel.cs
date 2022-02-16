@@ -10,6 +10,7 @@ namespace ViewModel.ViewModels
     {
         private AddOfferViewModel addOfferViewModel = new AddOfferViewModel();
         private DisplayOffersViewModel displayOffersViewModel = new DisplayOffersViewModel();
+        private RabinKarpViewModel rabinKarpViewModel = new RabinKarpViewModel();
         private BindableBase currentViewModel;
 
         public MyICommand<string> NavCommand { get; set; }
@@ -29,6 +30,9 @@ namespace ViewModel.ViewModels
                     break;
                 case "add":
                     CurrentViewModel = addOfferViewModel;
+                    break;
+                case "rabinkarp":
+                    CurrentViewModel = rabinKarpViewModel;
                     break;
             }
         }
