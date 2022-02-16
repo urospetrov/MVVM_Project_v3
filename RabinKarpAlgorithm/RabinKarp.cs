@@ -8,64 +8,63 @@ namespace RabinKarpAlgorithm
 {
     public class RabinKarp
     {
-        int mod = 113;
+        int mod = 64811;
         public int GetPatternCount(string baseString, string pattern)
         {
             int baseStringLen = baseString.Length;
             int patternLen = pattern.Length;
 
-            char[] possibleMatchChar = new char[patternLen];
+            if (patternLen > baseStringLen)
+            {
+                return 0;
+            }
+
+            char[] possibleMatchChar = baseString.Substring(0, patternLen).ToCharArray();
 
             int patternHash = HashMethod(pattern);
 
-            int cnt = 0;
-            int sum = 0;
+            int matchCount = 0;
+            int rollingHashValue = 0;
 
-            int i, j = 0;
-            int pwr = patternLen - 1;
+            int j = 0;
+            int power = patternLen - 1;
 
-            bool match = false;
+            bool isMatch = false;
 
-            while (j < patternLen)
+            rollingHashValue = HashMethod(new string(possibleMatchChar));
+            if (rollingHashValue == patternHash)
             {
-                possibleMatchChar[j] = baseString[j];
-                j++;
+                isMatch = pattern.Equals(new string(possibleMatchChar));
+                if (isMatch == true)
+                    matchCount++;
             }
 
-            sum = HashMethod(new string(possibleMatchChar));
-            if (sum == patternHash)
-                match = pattern.Equals(new string(possibleMatchChar));
-            if (match == true)
-                cnt++;
-
-            for (i = 1; i <= baseStringLen - patternLen; i++)
+            for (int i = 1; i <= baseStringLen - patternLen; i++)
             {
                 j = 0;
-                match = false;
+                isMatch = false;
+                
+                possibleMatchChar = baseString.Substring(i, patternLen).ToCharArray();
 
-                while (j < patternLen - 1)
+                rollingHashValue = (((rollingHashValue - ((baseString[i - 1] * (int)Math.Pow(2, power)) % mod) + mod) % mod * 2) + baseString[i + patternLen - 1]) % mod;
+
+                if ((rollingHashValue == patternHash))
                 {
-                    possibleMatchChar[j] = possibleMatchChar[j + 1];
-                    j++;
+                    isMatch = pattern.Equals(new string(possibleMatchChar));
+                    if (isMatch == true)
+                        matchCount++;
                 }
-                possibleMatchChar[patternLen - 1] = baseString[i + patternLen - 1];
-                sum = (((sum - ((baseString[i - 1] * (int)Math.Pow(2, pwr)) % mod) + mod) % mod * 2) + baseString[i + patternLen - 1]) % mod;
-
-                if (sum == patternHash)
-                    match = pattern.Equals(new string(possibleMatchChar));
-                if (match == true)
-                    cnt++;
             }
-            return cnt;
+            return matchCount;
         }
         private int HashMethod(string str)
         {
             int sum = 0;
-            int pwr = str.Length - 1;
+            int power = str.Length - 1;
             foreach (char c in str)
             {
-                sum += c * (int)Math.Pow(2, pwr);
-                pwr--;
+                sum += c * (int)Math.Pow(2, power);
+                power--;
             }
             sum = sum % mod;
             return sum;
